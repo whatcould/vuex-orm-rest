@@ -1,0 +1,25 @@
+{
+  "name": "vuex-orm-rest",
+  "version": "1.0.0",
+  "description": "vuex-orm plugin for RESTful backends",
+  "main": "dist/index.js",
+  "repository": "https://github.com/bierik/vuex-orm-rest",
+  "author": "Kevin Bieri",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "webpack --mode=production",
+    "lint": "eslint src/**/*.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "babel-loader": "^8.0.0",
+    "eslint": "^5.4.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0"
+  }
+}
