@@ -6,6 +6,7 @@ module.exports = {
     library: 'vuex-orm-rest',
     libraryTarget: 'umd',
     path: path.resolve(__dirname, 'dist'),
+    filename: 'index.js',
   },
   module: {
     rules: [
