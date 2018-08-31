@@ -9,16 +9,28 @@
   "private": false,
   "scripts": {
     "build": "webpack --mode=production",
-    "lint": "eslint src/**/*.js"
+    "lint": "eslint src/**/*.js test/**/*.js",
+    "test": "jest"
   },
-  "dependencies": {},
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    }
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.0.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^23.4.2",
     "babel-loader": "^8.0.0",
+    "babel-preset-env": "^1.7.0",
     "eslint": "^5.4.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^21.22.0",
+    "jest": "^23.5.0",
     "webpack": "^4.17.1",
     "webpack-cli": "^3.1.0"
   }
