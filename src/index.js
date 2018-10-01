@@ -1,10 +1,7 @@
+import install from '@/install';
+
 const plugin = {
-  install(components) {
-    // eslint-disable-next-line no-param-reassign
-    components.Model.fetch = () => {
-      console.log('fetching...');
-    };
-  },
+  install,
 };
 
 export default plugin;
