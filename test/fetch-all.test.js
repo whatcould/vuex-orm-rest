@@ -44,7 +44,7 @@ test('Calls the get method of the client when no constraint is violated', () => 
 
 test('throws error when filter is not an object', () => {
   expect(() => {
-    Dummy.fetchAll('');
+    Dummy.fetchAll({ filter: '' });
   }).toThrow('filter needs to be an object')
 });
 
@@ -52,6 +52,6 @@ test('passes filter to get request', () => {
   const get = jest.fn();
   installPlugin({ get });
 
-  Dummy.fetchAll({ search: '' });
+  Dummy.fetchAll({ filter: { search: '' } });
   expect(get).toHaveBeenCalledWith('dummyPath', { params: { search: '' } });
 });

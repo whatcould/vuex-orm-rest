@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import { checkConstraints } from '@/constraint';
+import joinPath from 'path.join';
 
-export default function fetchAll(filter = {}) {
+export default function fetchAll({ filter = {}, relations = [] } = {}) {
   const { get } = this.client;
 
   if (_.isUndefined(get)) {
@@ -14,6 +15,6 @@ export default function fetchAll(filter = {}) {
 
   checkConstraints(this);
 
-  const path = this.apiPath;
-  get(path, { params: filter });
+  const path = joinPath(...relations.map(r => r.apiPath), this.apiPath);
+  return get(path, { params: filter });
 }

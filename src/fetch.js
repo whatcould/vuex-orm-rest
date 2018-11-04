@@ -19,6 +19,5 @@ export default function fetch(id) {
 
   checkConstraints(this);
 
-  const path = joinPath(this.apiPath, id.toString());
-  get(path);
+  get(joinPath(this.apiPath, id.toString()));
 }
