@@ -5,6 +5,9 @@ module.exports = {
   plugins: ['jest'],
   parserOptions: {
     parser: "babel-eslint",
+    parserOptions: {
+      ecmaVersion: 7,
+    },
   },
   env: {
     "jest/globals": true,
