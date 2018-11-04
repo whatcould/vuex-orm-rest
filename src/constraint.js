@@ -20,6 +20,10 @@ const constraints = [checkEntityName, checkApiPath];
 
 export function checkConstraints(entity) {
   return constraints
-    .map(c => c(entity))
-    .reduce((l, r) => l && r, true);
+    .map((constraint) => {
+      if (_.isFunction(entity)) {
+        return constraint(entity);
+      }
+      return constraint(entity.constructor);
+    }).reduce((l, r) => l && r, true);
 }
