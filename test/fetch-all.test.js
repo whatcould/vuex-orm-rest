@@ -57,3 +57,10 @@ test('inserts fetched element in the database', async () => {
   expect(Dummy.find(1)).toEqual({ $id: 1 });
   expect(response).toEqual([{ $id: 1 }]);
 });
+
+test('throws error when response could not be processed', () => {
+  const store = createStore(Dummy);
+  const get = mockResponse(null);
+  installPlugin({ get });
+  expect(Dummy.fetchAll()).rejects.toEqual(new Error('Unable to process response.'))
+});

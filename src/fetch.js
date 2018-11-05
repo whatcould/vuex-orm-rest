@@ -20,6 +20,10 @@ export default async function fetch(id) {
   checkConstraints(this);
 
   const data = await get(joinPath(this.apiPath, id.toString()));
-  const insertedData = await this.insertOrUpdate(data);
-  return insertedData[this.entity][0];
+  try {
+    const insertedData = await this.insertOrUpdate(data);
+    return insertedData[this.entity][0];
+  } catch (error) {
+    throw new Error('Unable to process response.');
+  }
 }
