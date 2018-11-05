@@ -3,6 +3,8 @@ import fetch from '@/fetch';
 import fetchAll from '@/fetch-all';
 import apiPath from '@/api-path';
 import save from '@/save';
+import update from '@/update';
+import replace from '@/replace';
 
 /* eslint-disable no-param-reassign */
 export default function install({ Model }, { client } = {}) {
@@ -20,5 +22,7 @@ export default function install({ Model }, { client } = {}) {
     get: apiPath,
   });
   Model.prototype.save = save;
+  Model.prototype.update = update;
+  Model.prototype.replace = replace;
 }
 /* eslint-enable no-param-reassign */
