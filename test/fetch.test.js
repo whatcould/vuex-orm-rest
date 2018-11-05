@@ -48,7 +48,7 @@ test('Calls the get method of the client when no constraint is violated', () => 
 
 test('inserts fetched element in the database', async () => {
   const store = createStore(Dummy);
-  const get = jest.fn().mockReturnValue(mockResponse({ id: 1 }));
+  const get = mockResponse({ id: 1 });
   installPlugin({ get });
   const response = await Dummy.fetch(1);
   expect(Dummy.find(1)).toEqual({ $id: 1 });

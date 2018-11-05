@@ -29,7 +29,7 @@ test('Throws error when entity name or apiPath is not defined', () => {
 
 test('Calls the get method of the client when no constraint is violated', async () => {
   createStore(Dummy);
-  const get = jest.fn().mockReturnValue(mockResponse({}));
+  const get = mockResponse({});
   installPlugin({ get });
 
   await Dummy.fetchAll();
@@ -42,7 +42,7 @@ test('throws error when filter is not an object', () => {
 
 test('passes filter to get request', async () => {
   createStore(Dummy);
-  const get = jest.fn().mockReturnValue(mockResponse({}));
+  const get = mockResponse({});
   installPlugin({ get });
 
   await Dummy.fetchAll({ filter: { search: '' } });
@@ -51,7 +51,7 @@ test('passes filter to get request', async () => {
 
 test('inserts fetched element in the database', async () => {
   const store = createStore(Dummy);
-  const get = jest.fn().mockReturnValue(mockResponse([{ id: 1 }]));
+  const get = mockResponse([{ id: 1 }]);
   installPlugin({ get });
   const response = await Dummy.fetchAll();
   expect(Dummy.find(1)).toEqual({ $id: 1 });

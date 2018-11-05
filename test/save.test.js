@@ -21,7 +21,7 @@ test('Throws error when the client has no post method', () => {
 
 test('Calls post method of the client', async () => {
   createStore(Dummy);
-  const post = jest.fn().mockReturnValue(mockResponse({ id: 1 }));
+  const post = mockResponse({ id: 1 });
   installPlugin({ post });
   const dummy = new Dummy({ title: 'title', desc: 'desc' });
   await dummy.save();
@@ -30,7 +30,7 @@ test('Calls post method of the client', async () => {
 
 test('Only saves picked keys', async () => {
   createStore(Dummy);
-  const post = jest.fn().mockReturnValue(mockResponse({ id: 1 }));
+  const post = mockResponse({ id: 1 });
   installPlugin({ post });
   const dummy = new Dummy({ title: 'title', desc: 'desc' });
   await dummy.save(['title']);
@@ -39,7 +39,7 @@ test('Only saves picked keys', async () => {
 
 test('inserts object in store on save', async () => {
   const store = createStore(Dummy);
-  const post = jest.fn().mockReturnValue(mockResponse({ id: 1, title: 'title', desc: 'desc' }));
+  const post = mockResponse({ id: 1, title: 'title', desc: 'desc' });
   installPlugin({ post });
   const dummy = new Dummy({ title: 'title', desc: 'desc' });
   const response = await dummy.save();

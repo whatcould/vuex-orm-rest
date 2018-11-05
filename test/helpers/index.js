@@ -22,5 +22,5 @@ export function createStore(...entities) {
 }
 
 export function mockResponse(data) {
-  return Promise.resolve({ data });
+  return jest.fn().mockReturnValue(Promise.resolve({ data }));
 }
