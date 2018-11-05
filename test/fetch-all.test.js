@@ -1,5 +1,5 @@
 import { Model } from '@vuex-orm/core';
-import { installPlugin } from './helpers';
+import { installPlugin, createStore, mockResponse } from './helpers';
 
 class EntityDummy extends Model {
   static entity = '';
@@ -55,3 +55,12 @@ test('passes filter to get request', () => {
   Dummy.fetchAll({ filter: { search: '' } });
   expect(get).toHaveBeenCalledWith('dummyPath', { params: { search: '' } });
 });
+
+test('inserts fetched element in the database', async () => {
+  const store = createStore(Dummy);
+  const get = jest.fn().mockReturnValue(mockResponse({ id: 1 }));
+  installPlugin({ get });
+  const response = await Dummy.fetchAll();
+  expect(Dummy.find(1)).toEqual({ $id: 1 });
+  expect(response).toEqual([{ $id: 1 }]);
+})
