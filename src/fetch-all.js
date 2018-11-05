@@ -16,7 +16,7 @@ export default async function fetchAll({ filter = {}, relations = [] } = {}) {
   checkConstraints(this);
 
   const path = joinPath(...relations.map(r => r.apiPath), this.apiPath);
-  const { data } = await get(path, { params: filter });
-  const insertedData = await this.insertOrUpdate({ data });
+  const data = await get(path, { params: filter });
+  const insertedData = await this.insertOrUpdate(data);
   return insertedData[this.entity];
 }
