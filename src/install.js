@@ -5,6 +5,7 @@ import apiPath from '@/api-path';
 import save from '@/save';
 import update from '@/update';
 import replace from '@/replace';
+import destroy from '@/destroy';
 
 /* eslint-disable no-param-reassign */
 export default function install({ Model }, { client } = {}) {
@@ -24,5 +25,6 @@ export default function install({ Model }, { client } = {}) {
   Model.prototype.save = save;
   Model.prototype.update = update;
   Model.prototype.replace = replace;
+  Model.prototype.destroy = destroy;
 }
 /* eslint-enable no-param-reassign */
