@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { checkConstraints } from '@/constraint';
 
-export default function update(keys = Object.keys(this.$toJson())) {
+export default async function update(keys = Object.keys(this.$toJson())) {
   const { patch } = this.client;
 
   if (_.isUndefined(patch)) {
@@ -10,5 +10,7 @@ export default function update(keys = Object.keys(this.$toJson())) {
 
   checkConstraints(this);
 
-  patch(this.apiPath, _.omit(_.pick(this.$toJson(), keys), '$id'));
+  const { data } = await patch(this.apiPath, _.omit(_.pick(this.$toJson(), keys), '$id'));
+  const stored = await this.$update(data);
+  return stored[this.constructor.entity][0];
 }
