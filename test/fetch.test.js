@@ -1,5 +1,5 @@
 import { Model } from '@vuex-orm/core';
-import { installPlugin } from './helpers';
+import { installPlugin, createStore, mockResponse } from './helpers';
 
 class EntityDummy extends Model {
   static entity = '';
@@ -16,35 +16,26 @@ class Dummy extends Model {
 
 test('Throws error when the client has no get method', () => {
   installPlugin();
-  expect(() => { Model.fetch(); }).toThrow('HTTP Client has no `get` method');
+  expect(Model.fetch()).rejects.toEqual(new Error('HTTP Client has no `get` method'));
 });
 
 test('Throws error when no id is provided to fetch', () => {
   const get = jest.fn();
   installPlugin({ get });
 
-  expect(() => {
-    Model.fetch();
-  }).toThrow('No id is provided');
+  expect(Model.fetch()).rejects.toEqual(new Error('No id is provided'));
 });
 
 test('Throws error when id is not a number', () => {
   const get = jest.fn();
   installPlugin({ get });
 
-  expect(() => {
-    Model.fetch('');
-  }).toThrow('The id provided is not a number');
+  expect(Model.fetch('')).rejects.toEqual(new Error('The id provided is not a number'));
 });
 
 test('Throws error when entity name or apiPath is not defined', () => {
-  expect(() => {
-    EntityDummy.fetch(1);
-  }).toThrow("apiPath is not defined on class 'EntityDummy'");
-
-  expect(() => {
-    APIPathDummy.fetch(1);
-  }).toThrow("entity name is not defined on class 'APIPathDummy'");
+  expect(EntityDummy.fetch(1)).rejects.toEqual(new Error("apiPath is not defined on class 'EntityDummy'"));
+  expect(APIPathDummy.fetch(1)).rejects.toEqual(new Error("entity name is not defined on class 'APIPathDummy'"));
 });
 
 test('Calls the get method of the client when no constraint is violated', () => {
@@ -53,4 +44,13 @@ test('Calls the get method of the client when no constraint is violated', () => 
 
   Dummy.fetch(1);
   expect(get).toHaveBeenCalledWith('dummyPath/1');
+});
+
+test('inserts fetched element in the database', async () => {
+  const store = createStore(Dummy);
+  const get = jest.fn().mockReturnValue(mockResponse({ id: 1 }));
+  installPlugin({ get });
+  const response = await Dummy.fetch(1);
+  expect(Dummy.find(1)).toEqual({ $id: 1 });
+  expect(response).toEqual({ $id: 1 });
 });

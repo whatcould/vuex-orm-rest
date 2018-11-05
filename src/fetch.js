@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { checkConstraints } from '@/constraint';
 import joinPath from 'path.join';
 
-export default function fetch(id) {
+export default async function fetch(id) {
   const { get } = this.client;
 
   if (_.isUndefined(get)) {
@@ -19,5 +19,7 @@ export default function fetch(id) {
 
   checkConstraints(this);
 
-  get(joinPath(this.apiPath, id.toString()));
+  const { data } = await get(joinPath(this.apiPath, id.toString()));
+  const insertedData = await this.insertOrUpdate({ data });
+  return insertedData[this.entity][0];
 }
