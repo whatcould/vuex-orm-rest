@@ -1,5 +1,5 @@
 import { Model } from '@vuex-orm/core';
-import { installPlugin } from './helpers';
+import { installPlugin, mockResponse } from './helpers';
 
 class Dummy extends Model {
   static entity = 'dummy';
@@ -17,7 +17,7 @@ class RelationB extends Model {
 }
 
 test('Calls the get method with relations when no constraint is violated', () => {
-  const get = jest.fn();
+  const get = mockResponse({ id: 1 });
   installPlugin({ get });
 
   const relation = new RelationA({ $id: 1 });
@@ -27,7 +27,7 @@ test('Calls the get method with relations when no constraint is violated', () =>
 });
 
 test('Calls the get method with multiple relations', () => {
-  const get = jest.fn();
+  const get = mockResponse({ id: 1 });
   installPlugin({ get });
 
   const relationA = new RelationA({ $id: 1 });
