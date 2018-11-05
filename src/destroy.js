@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { checkConstraints } from '@/constraint';
 
-export default function destroy() {
+export default async function destroy() {
   const { delete: destroy } = this.client;
 
   if (_.isUndefined(destroy)) {
@@ -10,5 +10,6 @@ export default function destroy() {
 
   checkConstraints(this);
 
-  destroy(this.apiPath);
+  await destroy(this.apiPath);
+  return this.$delete();
 }
