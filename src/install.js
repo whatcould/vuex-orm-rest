@@ -6,6 +6,7 @@ import save from '@/save';
 import update from '@/update';
 import replace from '@/replace';
 import destroy from '@/destroy';
+import listKey from '@/list-key';
 
 /* eslint-disable no-param-reassign */
 export default function install({ Model }, { client } = {}) {
@@ -26,5 +27,6 @@ export default function install({ Model }, { client } = {}) {
   Model.prototype.update = update;
   Model.prototype.replace = replace;
   Model.prototype.destroy = destroy;
+  Model.prototype.listKey = listKey;
 }
 /* eslint-enable no-param-reassign */
