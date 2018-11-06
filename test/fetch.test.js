@@ -38,11 +38,12 @@ test('Throws error when entity name or apiPath is not defined', () => {
   expect(APIPathDummy.fetch(1)).rejects.toEqual(new Error("entity name is not defined on class 'APIPathDummy'"));
 });
 
-test('Calls the get method of the client when no constraint is violated', () => {
-  const get = jest.fn();
+test('Calls the get method of the client when no constraint is violated', async () => {
+  const store = createStore(Dummy);
+  const get = mockResponse({ id: 1 });
   installPlugin({ get });
 
-  Dummy.fetch(1);
+  await Dummy.fetch(1);
   expect(get).toHaveBeenCalledWith('dummyPath/1');
 });
 
