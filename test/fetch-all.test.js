@@ -37,7 +37,7 @@ test('Calls the get method of the client when no constraint is violated', async 
 });
 
 test('throws error when filter is not an object', () => {
-  expect(Dummy.fetchAll({ filter: '' })).rejects.toEqual(new Error('filter needs to be an object'));
+  expect(Dummy.fetchAll({ filter: '' })).rejects.toEqual(new Error('Filter needs to be an object'));
 });
 
 test('passes filter to get request', async () => {
