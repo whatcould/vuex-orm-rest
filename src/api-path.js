@@ -1,8 +1,8 @@
-import { checkEntityName } from '@/constraint';
+import { checkConstraints } from '@/constraint';
 import joinPath from 'path.join';
 
 export default function apiPath() {
-  checkEntityName(this.constructor);
+  checkConstraints(this.constructor);
 
   return joinPath(this.constructor.apiPath, this.$id.toString());
 }
