@@ -10,6 +10,6 @@ export default async function destroy() {
 
   checkConstraints(this);
 
-  await destroy(this.apiPath);
+  await destroy(this.apiPath());
   return this.$delete();
 }

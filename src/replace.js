@@ -10,5 +10,5 @@ export default function replace() {
 
   checkConstraints(this);
 
-  put(this.apiPath, _.omit(this.$toJson(), '$id'));
+  put(this.apiPath(), _.omit(this.$toJson(), '$id'));
 }
