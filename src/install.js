@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import fetch from '@/fetch';
 import fetchAll from '@/fetch-all';
+import findOrFetch from '@/find-or-fetch';
 import apiPath from '@/api-path';
 import save from '@/save';
 import update from '@/update';
@@ -27,6 +28,7 @@ export default function install({ Model }, { client, router } = {}) {
 
   Model.fetch = fetch;
   Model.fetchAll = fetchAll;
+  Model.findOrFetch = findOrFetch;
 
   Model.prototype.save = save;
   Model.prototype.update = update;
