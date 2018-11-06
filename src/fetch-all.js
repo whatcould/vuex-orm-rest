@@ -10,7 +10,7 @@ export default async function fetchAll({ filter = {}, relations = [] } = {}) {
   }
 
   if (!_.isObject(filter)) {
-    throw new Error('filter needs to be an object');
+    throw new Error('Filter needs to be an object');
   }
 
   checkConstraints(this);
