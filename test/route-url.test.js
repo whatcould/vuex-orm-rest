@@ -1,5 +1,6 @@
 import { Model } from '@vuex-orm/core';
 import { installPlugin, mockResponse, createStore } from './helpers';
+import VueRouter from 'vue-router';
 
 class RouteDummy extends Model {
   static entity = 'dummy';

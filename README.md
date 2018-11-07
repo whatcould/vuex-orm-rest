@@ -10,16 +10,36 @@ The plugin extends the basic model of Vuex-ORM with some helful functions to mak
 
 You no longer need to access your http client manually. All the comunication happens thru the enhanced Vuex-ORM models.
 
+# Dependencies
+
+* [vuex](https://github.com/vuejs/vuex)
+
+``` bash
+yarn add vuex
+```
+
+* [Vuex-ORM](https://github.com/vuex-orm/vuex-orm)
+
+``` bash
+yarn add @vuex-orm/core
+```
+
+* [axios](https://github.com/axios/axios) (recommended)
+
+``` bash
+yarn add axios
+```
+
+* [vue-router](https://github.com/vuejs/vue-router)
+
+``` bash
+yarn add vue-router
+```
+
 # Installation
 
 ``` bash
 yarn add vuex-orm-rest
-```
-
-or
-
-``` bash
-npm install vuex-orm-rest
 ```
 
 The plugin requires a HTTP-Client to make requests to the backend. The client is passed as an option to the plugin. The following tables shows the association between the client- and CRUD method.
@@ -38,15 +58,24 @@ Also the a vue-router instance is needed to generate routes from the model insta
 The following exmaple installs the plugin using [axios](https://github.com/axios/axios) as the HTTP-Client and a vue-router instance.
 
 ``` javascript
+import Vue from 'vue'
+import Vuex from 'vuex'
 import VuexORM from '@vuex-orm/core';
 import VuexORMRest from 'vuex-orm-rest';
 import axios from 'axios';
 import VueRouter from 'vue-router';
 
 const client = axios.create({ baseURL: '/api' });
+const database = new VuexORM.Database();
 const router = new VueRouter();
 
 VuexORM.use(VuexORMRest, { client, router });
+
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+  plugins: [VuexORM.install(database)],
+});
 ```
 
 # Defining models
@@ -72,6 +101,12 @@ class User extends Model {
     }
   }
 }
+```
+
+Your vuex-orm instance need to know about your model.
+
+``` javascript
+database.register(User, {});
 ```
 
 ## fetch
