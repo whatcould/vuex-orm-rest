@@ -5,3 +5,5 @@ const plugin = {
 };
 
 export default plugin;
+
+export { default as Queue } from '@/queue';
