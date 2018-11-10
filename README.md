@@ -186,3 +186,43 @@ Returns a promise with the delete response.
 const user = User.find(1);
 user.destroy();
 ```
+
+# Async queue
+
+The async queue is a utility which helps to manage fetching data.
+It is possible to execute functions sequentially or in parallel.
+All the methods from the queue are chainable. The whole queue is executed using the `exec` method.
+
+## Sequence
+
+The sequence method executes functions sequentially. The result from the previous sequence is passed to the next step when resolved.
+
+``` javascript
+const res = await Queue
+  .sequence(() => Promise.resolve(1))
+  .sequence((res) => Promise.resolve(res + 1))
+  .exec(); // Evaluates to 2
+```
+## Parallel
+
+The parallel method executes functions in parallel. The result from the previous parallel is passed to the next step as an array when all functions are resolved.
+
+``` javascript
+const res = await Queue
+  .parallel(() => Promise.resolve(1))
+  .parallel(() => Promise.resolve(2))
+  .parallel(() => Promise.resolve(3))
+  .exec(); // Evaluates to [1, 2, 3]
+```
+
+It is also possible to mix the parallel and sequence method.
+
+``` javascript
+const res = await Queue
+  .sequence(() => Promise.resolve(1))
+  .parallel((res) => Promise.resolve(res + 1))
+  .parallel((res) => Promise.resolve(res + 1))
+  .parallel((res) => Promise.resolve(res + 1))
+  .sequence((res) => Promise.resolve(res))
+  .exec(); // Evaluates to [2, 2, 2]
+```
