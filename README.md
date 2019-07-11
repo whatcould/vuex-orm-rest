@@ -80,7 +80,7 @@ Your vuex-orm instance need to know about your model.
 database.register(User, {});
 ```
 
-## fetch
+## fetch(id = null)
 
 Fills the store with a single item by id.
 Returns a promise with the fetched data.
@@ -95,7 +95,7 @@ The fetched user now lies in the store and can be retrieved by using the Vuex-OR
 const user = User.find(1);
 ```
 
-## fetchAll
+## fetchAll({ filter = {}, relations = [], replace = false })
 
 Fills the store with a list of items.
 Returns a promise with the fetched data.
@@ -104,13 +104,27 @@ Returns a promise with the fetched data.
 User.fetchAll();
 ```
 
+Pass filter to append it as query string to the get request.
+
+``` javascript
+User.fetchAll({ filter: { active: true } });
+```
+
+Pass relations to fetch nested structure.
+
+``` javascript
+const user = User.find(1);
+Comments.fetchAll({ relations: [user] });
+// fetches using /user/1/comments
+```
+
 Retrieve the fetched users.
 
 ``` javascript
 User.all();
 ```
 
-## save
+## save(keys = Object.keys(this.$toJson()))
 
 Saves a user instance using post verb.
 Returns a promise with the post response.
@@ -120,7 +134,15 @@ const user = new User({ name: 'John Doe' });
 user.save();
 ```
 
-## update
+Pass keys as param to define which attributes should be send to the backend.
+
+``` javascript
+const user = new User({ name: 'John Doe' });
+user.save(['name']);
+```
+
+
+## update(keys = Object.keys(this.$toJson()))
 
 Updates an existing user using patch verb.
 Returns a promise with the patch response.
