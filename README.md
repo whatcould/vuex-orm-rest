@@ -30,11 +30,6 @@ yarn add @vuex-orm/core
 yarn add axios
 ```
 
-* [vue-router](https://github.com/vuejs/vue-router)
-
-``` bash
-yarn add vue-router
-```
 
 # Installation
 
@@ -53,30 +48,6 @@ The plugin requires a HTTP-Client to make requests to the backend. The client is
 | replace  | put    |
 | destroy  | delete |
 
-Also the a vue-router instance is needed to generate routes from the model instances.
-
-The following exmaple installs the plugin using [axios](https://github.com/axios/axios) as the HTTP-Client and a vue-router instance.
-
-``` javascript
-import Vue from 'vue'
-import Vuex from 'vuex'
-import VuexORM from '@vuex-orm/core';
-import VuexORMRest from 'vuex-orm-rest';
-import axios from 'axios';
-import VueRouter from 'vue-router';
-
-const client = axios.create({ baseURL: '/api' });
-const database = new VuexORM.Database();
-const router = new VueRouter();
-
-VuexORM.use(VuexORMRest, { client, router });
-
-Vue.use(Vuex);
-
-export default new Vuex.Store({
-  plugins: [VuexORM.install(database)],
-});
-```
 
 # Defining models
 

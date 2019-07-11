@@ -3,14 +3,11 @@ import * as components from '@vuex-orm/core';
 import Vuex from 'vuex';
 import Vue from 'vue';
 import VuexORM, { Database } from '@vuex-orm/core';
-import Router from 'vue-router';
-
-const router = new Router({ base: '/' });
 
 Vue.use(Vuex);
 
 export function installPlugin(client = {}) {
-  install(components, { client, router });
+  install(components, { client });
 }
 
 export function createStore(...entities) {

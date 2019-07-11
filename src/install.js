@@ -12,24 +12,18 @@ import routeName from '@/route-name';
 import { routeURL, showURL, editURL } from '@/route-url';
 
 /* eslint-disable no-param-reassign */
-export default function install({ Model }, { client, router } = {}) {
+export default function install({ Model }, { client } = {}) {
   // REST Client needs to be installed to make http requests
   if (_.isUndefined(client)) {
     throw new Error('HTTP-Client is not defined');
   }
-  Model.prototype.client = client;
+
   Model.client = client;
-
-  if (_.isUndefined(router)) {
-    throw new Error('Router is not defined');
-  }
-  Model.prototype.router = router;
-  Model.router = router;
-
   Model.fetch = fetch;
   Model.fetchAll = fetchAll;
   Model.findOrFetch = findOrFetch;
 
+  Model.prototype.client = client;
   Model.prototype.save = save;
   Model.prototype.update = update;
   Model.prototype.replace = replace;
