@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { checkConstraints } from '@/constraint';
 import joinPath from 'path.join';
 
-export default async function fetchAll({ filter = {}, relations = [] } = {}) {
+export default async function fetchAll({ filter = {}, relations = [], replace = false } = {}) {
   const { get } = this.client;
 
   if (_.isUndefined(get)) {
@@ -19,7 +19,7 @@ export default async function fetchAll({ filter = {}, relations = [] } = {}) {
 
   try {
     const data = await get(path, { params: filter });
-    const insertedData = await this.insertOrUpdate(data);
+    const insertedData = replace ? await this.create(data) : await this.insertOrUpdate(data);
     return insertedData[this.entity];
   } catch (error) {
     throw new Error('Unable to process response.');

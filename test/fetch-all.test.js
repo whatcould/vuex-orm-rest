@@ -64,3 +64,14 @@ test('throws error when response could not be processed', () => {
   installPlugin({ get });
   expect(Dummy.fetchAll()).rejects.toEqual(new Error('Unable to process response.'))
 });
+
+test('replaces the store when replace is set to true', async () => {
+  const store = createStore(Dummy);
+  installPlugin({ get: mockResponse({ id: 1 }) });
+  await Dummy.fetchAll({ replace: true });
+  expect(Dummy.all()).toEqual([{ $id: 1 }])
+
+  installPlugin({ get: mockResponse({ id: 2 }) });
+  await Dummy.fetchAll({ replace: true });
+  expect(Dummy.all()).toEqual([{ $id: 2 }])
+});
