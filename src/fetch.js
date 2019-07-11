@@ -19,11 +19,31 @@ export default async function fetch(id) {
 
   checkConstraints(this);
 
-  const data = await get(joinPath(this.apiPath, id.toString()));
-  try {
-    const insertedData = await this.insertOrUpdate(data);
-    return insertedData[this.entity][0];
-  } catch (error) {
-    throw new Error('Unable to process response.');
+  const self = this;
+
+  function fetchCache() {
+    return new Promise((resolve) => {
+      const cachedValue = self.find(id);
+      if (cachedValue) {
+        resolve(cachedValue);
+      }
+    });
   }
+
+  function fetchAPI() {
+    return new Promise(async (resolve) => {
+      const data = await get(joinPath(self.apiPath, id.toString()));
+      try {
+        const insertedData = await self.insertOrUpdate(data);
+        resolve(insertedData[self.entity][0]);
+      } catch (error) {
+        throw new Error('Unable to process response.');
+      }
+    });
+  }
+
+  return Promise.race([
+    fetchCache(),
+    fetchAPI(),
+  ]);
 }

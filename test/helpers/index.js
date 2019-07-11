@@ -24,3 +24,21 @@ export function createStore(...entities) {
 export function mockResponse(data) {
   return jest.fn().mockReturnValue(Promise.resolve({ data }));
 }
+
+export function deferResponse() {
+  let resolve = null;
+  const mock = jest.fn();
+
+  function implementMock() {
+    const promise = new Promise((r) => { resolve = r; });
+    mock.mockReturnValue(promise);
+  }
+
+  implementMock();
+
+  return {
+    mock,
+    resolve: data => resolve({ data }),
+    reload: implementMock,
+  };
+}
