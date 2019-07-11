@@ -1,7 +1,12 @@
 import _ from 'lodash';
 import { checkEntityName } from '@/constraint';
 
-export function routeURL(type) {
+const ROUTE_TYPES = {
+  SHOW: 'show',
+  EDIT: 'edit',
+};
+
+export function routeURL(type = ROUTE_TYPES.SHOW, options = {}) {
   checkEntityName(this.constructor);
 
   if (_.isUndefined(this.$id)) {
@@ -13,13 +18,14 @@ export function routeURL(type) {
     params: {
       id: this.$id,
     },
+    ...options,
   };
 }
 
-export function showURL() {
-  return this.routeURL('show');
+export function showURL(options = {}) {
+  return this.routeURL(ROUTE_TYPES.SHOW, options);
 }
 
-export function editURL() {
-  return this.routeURL('edit');
+export function editURL(options = {}) {
+  return this.routeURL(ROUTE_TYPES.EDIT, options);
 }

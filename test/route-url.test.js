@@ -23,6 +23,13 @@ test('Throws error when no id is defined', () => {
   expect(() => { emptyDummy.routeURL(); }).toThrow("Unable to generate route URL. No id defined for 'dummy'.")
 });
 
+test('Default route url type is show', () => {
+  installPlugin();
+  const routeDummy = new RouteDummy({ $id: 1 });
+
+  expect(routeDummy.routeURL()).toEqual({ name: 'show-dummyRoute', params: { id: 1 } });
+})
+
 test('Generates arbitrary route urls', () => {
   installPlugin();
   const routeDummy = new RouteDummy({ $id: 1 });
@@ -42,4 +49,12 @@ test('Generates edit route urls', () => {
   const routeDummy = new RouteDummy({ $id: 1 });
 
   expect(routeDummy.editURL()).toEqual({ name: 'edit-dummyRoute', params: { id: 1 } });
+});
+
+test('Accepts additional options for route url', () => {
+  installPlugin();
+  const routeDummy = new RouteDummy({ $id: 1 });
+
+  expect(routeDummy.routeURL('show', { hash: '#hash' }))
+    .toEqual({ name: 'show-dummyRoute', params: { id: 1 }, hash: '#hash' });
 });

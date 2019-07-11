@@ -180,6 +180,36 @@ const user = User.find(1);
 user.destroy();
 ```
 
+## routeURL(type = 'show', options = {})
+
+Generate a route URL with prefix on a model instance.
+``` javascript
+const user = User.find(1);
+user.routeURL('some'); // --> { name: 'some-user', params: { id: 1 } }
+```
+
+Passing options allows for having params such as a hash on the link
+``` javascript
+const user = User.find(1);
+user.routeURL('show', { hash: '#hash' }); // --> { name: 'some-user', params: { id: 1 }, hash: '#hash' }
+```
+
+## showURL(options = {})
+
+Generate a route URL with show prefix on a model instance.
+``` javascript
+const user = User.find(1);
+user.showURL(); // --> { name: 'show-user', params: { id: 1 } }
+```
+
+## editURL(options = {})
+
+Generate a route URL with edit prefix on a model instance.
+``` javascript
+const user = User.find(1);
+user.showURL(); // --> { name: 'edit-user', params: { id: 1 } }
+```
+
 # Async queue
 
 The async queue is a utility which helps to manage fetching data.
