@@ -210,6 +210,14 @@ const user = User.find(1);
 user.showURL(); // --> { name: 'edit-user', params: { id: 1 } }
 ```
 
+## listKey
+
+Generate unique key for iterations in DOM such as `v-for` in vuejs.
+``` javascript
+const user = User.find(1);
+user.listKey(); // --> 'user-1'
+```
+
 # Async queue
 
 The async queue is a utility which helps to manage fetching data.
