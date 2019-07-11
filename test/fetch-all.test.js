@@ -14,6 +14,11 @@ class Dummy extends Model {
   static apiPath = 'dummyPath';
 }
 
+class RelationDummy extends Model {
+  static entity = 'relation-dummy';
+  static apiPath = 'relation-dummyPath';
+}
+
 test('Throws error when the client has no get method', () => {
   installPlugin();
   expect(Model.fetchAll()).rejects.toEqual(new Error('HTTP Client has no `get` method'));
@@ -74,4 +79,13 @@ test('replaces the store when replace is set to true', async () => {
   installPlugin({ get: mockResponse({ id: 2 }) });
   await Dummy.fetchAll({ replace: true });
   expect(Dummy.all()).toEqual([{ $id: 2 }])
+});
+
+test('builds path using relations', async () => {
+  createStore(Dummy, RelationDummy);
+  await RelationDummy.insert({ data: { id: 1 } });
+  const get = mockResponse([]);
+  installPlugin({ get });
+  await Dummy.fetchAll({ relations: [RelationDummy.find(1)] });
+  expect(get).toHaveBeenCalledWith('relation-dummyPath/1/dummyPath', { params: {} });
 });
