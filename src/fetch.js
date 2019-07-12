@@ -31,13 +31,13 @@ export default async function fetch(id) {
   }
 
   function fetchAPI() {
-    return new Promise(async (resolve) => {
+    return new Promise(async (resolve, reject) => {
       const data = await get(joinPath(self.apiPath, id.toString()));
       try {
         const insertedData = await self.insertOrUpdate(data);
         resolve(insertedData[self.entity][0]);
       } catch (error) {
-        throw new Error('Unable to process response.');
+        reject(new Error('Unable to process response.'));
       }
     });
   }
