@@ -2,7 +2,12 @@ import _ from 'lodash';
 import { checkConstraints } from '@/constraint';
 import joinPath from 'path.join';
 
-export default async function fetchAll({ filter = {}, relations = [], replace = false } = {}) {
+export default async function fetchAll({
+  filter = {},
+  relations = [],
+  replace = false,
+  useCache = true,
+} = {}) {
   const { get } = this.client;
 
   if (_.isUndefined(get)) {
@@ -40,7 +45,7 @@ export default async function fetchAll({ filter = {}, relations = [], replace = 
   }
 
   return Promise.race([
-    fetchCache(),
+    ...(useCache ? [fetchCache()] : []),
     fetchAPI(),
   ]);
 }

@@ -36,6 +36,24 @@ yarn add axios
 ``` bash
 yarn add vuex-orm-rest
 ```
+The following exmaple installs the plugin using [axios](https://github.com/axios/axios) as the HTTP-Client and a vue-router instance.
+
+ ``` javascript
+import Vue from 'vue'
+import Vuex from 'vuex'
+import VuexORM from '@vuex-orm/core';
+import VuexORMRest from 'vuex-orm-rest';
+import axios from 'axios';
+
+const client = axios.create({ baseURL: '/api' });
+const database = new VuexORM.Database();
+
+VuexORM.use(VuexORMRest, { client });
+Vue.use(Vuex);
+export default new Vuex.Store({
+  plugins: [VuexORM.install(database)],
+});
+```
 
 The plugin requires a HTTP-Client to make requests to the backend. The client is passed as an option to the plugin. The following tables shows the association between the client- and CRUD method.
 
@@ -216,6 +234,29 @@ Generate unique key for iterations in DOM such as `v-for` in vuejs.
 ``` javascript
 const user = User.find(1);
 user.listKey(); // --> 'user-1'
+```
+
+# Caching
+
+Every `fetch` or `fetchAll` request first hits the store and returns the entities immediately if found.
+In the background the http request happens and updates as soon as the response is back.
+This method will make your UI respond fast on the first hit but may be outdated.
+But the request in the background will update it as soon as possible.
+
+
+The caching is enabled by default and can be turned of globally by passing the `useCache` option.
+
+``` javascript
+import VuexORM from '@vuex-orm/core';
+import VuexORMRest from 'vuex-orm-rest';
+
+VuexORM.use(VuexORMRest, { useCache: false });
+```
+
+It is also possible to disable the caching for a single request.
+
+``` javascript
+User.fetch(1, { useCache: false });
 ```
 
 # Async queue

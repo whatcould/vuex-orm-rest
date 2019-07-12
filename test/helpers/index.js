@@ -6,8 +6,8 @@ import VuexORM, { Database } from '@vuex-orm/core';
 
 Vue.use(Vuex);
 
-export function installPlugin(client = {}) {
-  install(components, { client });
+export function installPlugin(client = {}, options = {}) {
+  install(components, { client, ...options });
 }
 
 export function createStore(...entities) {

@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { checkConstraints } from '@/constraint';
 import joinPath from 'path.join';
 
-export default async function fetch(id) {
+export default async function fetch(id, { useCache = true } = {}) {
   const { get } = this.client;
 
   if (_.isUndefined(get)) {
@@ -43,7 +43,7 @@ export default async function fetch(id) {
   }
 
   return Promise.race([
-    fetchCache(),
+    ...(useCache && self.useCache ? [fetchCache()] : []),
     fetchAPI(),
   ]);
 }
