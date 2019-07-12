@@ -23,7 +23,6 @@
     "setupTestFrameworkScriptFile": "<rootDir>/test/setup.js"
   },
   "dependencies": {
-    "@babel/preset-env": "^7.0.0",
     "arboreal.js": "^0.0.3",
     "lodash": "^4.17.11",
     "path.join": "^1.0.0"
@@ -32,6 +31,7 @@
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
     "@vuex-orm/core": "^0.26.2",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.4.2",
