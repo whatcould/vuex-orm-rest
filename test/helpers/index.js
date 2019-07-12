@@ -27,10 +27,14 @@ export function mockResponse(data) {
 
 export function deferResponse() {
   let resolve = null;
+  let reject = null;
   const mock = jest.fn();
 
   function implementMock() {
-    const promise = new Promise((r) => { resolve = r; });
+    const promise = new Promise((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
     mock.mockReturnValue(promise);
   }
 
@@ -39,6 +43,7 @@ export function deferResponse() {
   return {
     mock,
     resolve: data => resolve({ data }),
+    reject,
     reload: implementMock,
   };
 }

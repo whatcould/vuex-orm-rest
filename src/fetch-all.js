@@ -15,13 +15,32 @@ export default async function fetchAll({ filter = {}, relations = [], replace = 
 
   checkConstraints(this);
 
-  const path = joinPath(...relations.map(r => r.apiPath()), this.apiPath);
+  const self = this;
 
-  try {
-    const data = await get(path, { params: filter });
-    const insertedData = replace ? await this.create(data) : await this.insertOrUpdate(data);
-    return insertedData[this.entity];
-  } catch (error) {
-    throw new Error('Unable to process response.');
+  function fetchCache() {
+    return new Promise((resolve) => {
+      const cachedValue = self.all();
+      if (cachedValue.length) {
+        resolve(cachedValue);
+      }
+    });
   }
+
+  function fetchAPI() {
+    return new Promise(async (resolve, reject) => {
+      const path = joinPath(...relations.map(r => r.apiPath()), self.apiPath);
+      const data = await get(path, { params: filter });
+      try {
+        const insertedData = replace ? await self.create(data) : await self.insertOrUpdate(data);
+        resolve(insertedData[self.entity]);
+      } catch (error) {
+        reject(new Error('Unable to process response.'));
+      }
+    });
+  }
+
+  return Promise.race([
+    fetchCache(),
+    fetchAPI(),
+  ]);
 }
