@@ -58,7 +58,7 @@ test('inserts fetched element in the database', async () => {
 
 test('throws error when response could not be processed', () => {
   const store = createStore(Dummy);
-  const get = mockResponse({});
+  const get = mockResponse(null);
   installPlugin({ get });
   expect(Dummy.fetch(1)).rejects.toEqual(new Error('Unable to process response.'))
 });
