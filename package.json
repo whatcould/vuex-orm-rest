@@ -1,6 +1,6 @@
 {
   "name": "vuex-orm-rest",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "vuex-orm plugin for RESTful backends",
   "main": "dist/index.js",
   "repository": "https://github.com/bierik/vuex-orm-rest",
