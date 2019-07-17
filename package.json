@@ -20,7 +20,7 @@
       "@/(.*)$": "<rootDir>/src/$1",
       "tests/(.*)$": "<rootDir>/tests/$1"
     },
-    "setupTestFrameworkScriptFile": "<rootDir>/test/setup.js"
+    "setupFilesAfterEnv": ["<rootDir>/test/setup.js"]
   },
   "dependencies": {
     "arboreal.js": "^0.0.3",

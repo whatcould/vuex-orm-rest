@@ -10,7 +10,7 @@ export default async function save(keys = Object.keys(this.$toJson())) {
 
   checkConstraints(this);
 
-  const data = await post(this.constructor.apiPath, _.omit(_.pick(this.$toJson(), keys), '$id'));
+  const data = await post(this.constructor.apiPath, this.pickKeys(keys));
   const stored = await this.$insert(data);
   return stored[this.constructor.entity][0];
 }

@@ -10,6 +10,7 @@ import destroy from '@/destroy';
 import listKey from '@/list-key';
 import routeName from '@/route-name';
 import { routeURL, showURL, editURL } from '@/route-url';
+import pickKeys from '@/pick-keys';
 
 /* eslint-disable no-param-reassign */
 export default function install({ Model }, { client, useCache = true } = {}) {
@@ -36,5 +37,6 @@ export default function install({ Model }, { client, useCache = true } = {}) {
   Model.prototype.routeURL = routeURL;
   Model.prototype.showURL = showURL;
   Model.prototype.editURL = editURL;
+  Model.prototype.pickKeys = pickKeys;
 }
 /* eslint-enable no-param-reassign */

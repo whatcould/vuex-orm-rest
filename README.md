@@ -236,6 +236,28 @@ const user = User.find(1);
 user.listKey(); // --> 'user-1'
 ```
 
+## pickKeys(keys = Object.keys(this.$toJson()))
+
+Serializes all fields by default but the `$id` of an entity. Using the `keys` parameter you can define which keys should be serialized.
+
+``` javascript
+const user = User.find(1);
+user.pickKeys(); // --> { firstname: 'Hugo', lastname: 'Boss' }
+user.pickKeys(['firstname']); // --> { firstname: 'Hugo' }
+```
+
+The `save` and `update` method uses `pickKeys` to determine which fields should be send to the backend.
+You could override this method to always include a certain key:
+
+```javascript
+pickKeys(keys) {
+  return super.pickKeys([
+    ...keys,
+    'this_key_is_always_in_the_payload',
+  ]);
+}
+```
+
 # Caching
 
 Every `fetch` or `fetchAll` request first hits the store and returns the entities immediately if found.
