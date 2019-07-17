@@ -1,6 +1,6 @@
 {
   "name": "vuex-orm-rest",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "vuex-orm plugin for RESTful backends",
   "main": "dist/index.js",
   "repository": "https://github.com/bierik/vuex-orm-rest",
@@ -20,7 +20,9 @@
       "@/(.*)$": "<rootDir>/src/$1",
       "tests/(.*)$": "<rootDir>/tests/$1"
     },
-    "setupFilesAfterEnv": ["<rootDir>/test/setup.js"]
+    "setupFilesAfterEnv": [
+      "<rootDir>/test/setup.js"
+    ]
   },
   "dependencies": {
     "arboreal.js": "^0.0.3",
