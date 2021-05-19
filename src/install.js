@@ -11,6 +11,7 @@ import listKey from '@/list-key';
 import routeName from '@/route-name';
 import { routeURL, showURL, editURL } from '@/route-url';
 import pickKeys from '@/pick-keys';
+import nestParams from '@/nest-params';
 
 /* eslint-disable no-param-reassign */
 export default function install({ Model }, { client, useCache = true } = {}) {
@@ -38,5 +39,6 @@ export default function install({ Model }, { client, useCache = true } = {}) {
   Model.prototype.showURL = showURL;
   Model.prototype.editURL = editURL;
   Model.prototype.pickKeys = pickKeys;
+  Model.prototype.nestParams = nestParams;
 }
 /* eslint-enable no-param-reassign */
