@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { checkConstraints } from '@/constraint';
 
 export default async function save(keys = Object.keys(this.$toJson())) {
-  if(this.id.indexOf('$uid') === -1) {
+  if(this.$id.indexOf('$uid') === -1) {
     return this.update(keys)
   }
   const { post } = this.client;
