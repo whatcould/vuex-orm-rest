@@ -11,9 +11,9 @@ function cleanNulls(obj) {
   return obj
 }
 
-export default async function save(keys = Object.keys(this.$toJson())) {
+export default async function save(keys = Object.keys(this.$toJson()), updateFromResponse = false) {
   if(this.$id && this.$id.indexOf('$uid') === -1) {
-    return this.update(keys)
+    return this.update(keys, updateFromResponse)
   }
 
   const { post } = this.client;
@@ -25,7 +25,13 @@ export default async function save(keys = Object.keys(this.$toJson())) {
   checkConstraints(this);
 
   const data = await post(this.constructor.apiPath, this.nestParams(this.pickKeys(keys)));
-  let updateWithId = Object.assign(this.$toJson(), {id: data.data.id})
-  const stored = await this.$insert({data: cleanNulls(updateWithId)});
-  return stored[this.constructor.entity][0];
+  if(updateFromResponse) {
+    const stored = await this.$insert(data);
+    return stored[this.constructor.entity][0];
+  }
+  else {
+    let updateWithId = Object.assign(this.$toJson(), {id: data.data.id})
+    const stored = await this.$insert({data: cleanNulls(updateWithId)});
+    return stored[this.constructor.entity][0];
+  }
 }
