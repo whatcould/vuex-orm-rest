@@ -9,7 +9,9 @@ export default async function fetchAll({
   useCache = true,
 } = {}) {
   const { get } = this.client;
-
+  if(filter.page) {
+    this.currentPage = filter.page
+  }
   if (_.isUndefined(get)) {
     throw new Error('HTTP Client has no `get` method');
   }
@@ -36,6 +38,7 @@ export default async function fetchAll({
       const path = joinPath(...relations.map(r => r.apiPath()), self.apiPath);
       const data = await get(path, { params: filter });
       try {
+        self.totalPages = parseInt(data.headers['total-pages'])
         const insertedData = replace ? await self.create(data) : await self.insertOrUpdate(data);
         resolve(insertedData[self.entity]);
       } catch (error) {

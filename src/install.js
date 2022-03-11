@@ -27,6 +27,9 @@ export default function install({ Model }, { client, useCache = true } = {}) {
   Model.fetchAll = fetchAll;
   Model.findOrFetch = findOrFetch;
 
+  Model.currentPage = 0;
+  Model.totalPages = 1;
+
   Model.prototype.client = client;
   Model.prototype.save = save;
   Model.prototype.update = update;
