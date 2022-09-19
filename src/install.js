@@ -29,6 +29,7 @@ export default function install({ Model }, { client, useCache = true } = {}) {
 
   Model.currentPage = 0;
   Model.totalPages = 1;
+  Model.totalCount = 0;
 
   Model.prototype.client = client;
   Model.prototype.save = save;

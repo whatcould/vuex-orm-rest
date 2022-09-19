@@ -38,6 +38,7 @@ export default async function fetchAll({
       const path = joinPath(...relations.map(r => r.apiPath()), self.apiPath);
       const data = await get(path, { params: filter });
       try {
+        self.totalCount = parseInt(data.headers['total-count'])
         self.totalPages = parseInt(data.headers['total-pages'])
         const insertedData = replace ? await self.create(data) : await self.insertOrUpdate(data);
         resolve(insertedData[self.entity]);
