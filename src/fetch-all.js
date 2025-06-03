@@ -7,6 +7,7 @@ export default async function fetchAll({
   relations = [],
   replace = false,
   useCache = true,
+  dataTransformer = undefined
 } = {}) {
   const { get } = this.client;
   if(filter.page) {
@@ -36,7 +37,10 @@ export default async function fetchAll({
   function fetchAPI() {
     return new Promise(async (resolve, reject) => {
       const path = joinPath(...relations.map(r => r.apiPath()), self.apiPath);
-      const data = await get(path, { params: filter });
+      let data = await get(path, { params: filter });
+      if (_.isObject(dataTransformer)) {
+        data = dataTransformer(data)
+      }
       try {
         self.totalCount = parseInt(data.headers['total-count'])
         self.totalPages = parseInt(data.headers['total-pages'])

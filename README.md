@@ -128,6 +128,19 @@ Pass filter to append it as query string to the get request.
 User.fetchAll({ filter: { active: true } });
 ```
 
+Pass a method to transform the data before inserting it. In this case, we set a position attribute to get around the limitation that VuexORM forgets the original order of the response.
+
+``` javascript
+
+const dataTransformer = (response) => {
+    response.data = response.data.map((comment, index) => ({ ...comment, position: index }))
+    return response
+}
+Comments.fetchAll({dataTransformer: dataTransformer});
+```
+
+
+
 Pass relations to fetch nested structure.
 
 ``` javascript
@@ -135,6 +148,7 @@ const user = User.find(1);
 Comments.fetchAll({ relations: [user] });
 // fetches using /user/1/comments
 ```
+
 
 Retrieve the fetched users.
 
